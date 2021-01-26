@@ -27,6 +27,7 @@ const webpackConfig = {
   // 这就是我们项目编译的入口文件
   entry: path.resolve(__dirname, './src/main.ts'),
   output: {
+    publicPath:"/",
     path: path.resolve(__dirname, 'dist'),
     filename: '[name][hash].js'
   },

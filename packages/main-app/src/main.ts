@@ -3,7 +3,7 @@ import { registerMicroApps, runAfterFirstMounted, start } from 'qiankun';
 registerMicroApps([
   {
     name: 'react app', // app name registered
-    entry: '//localhost:8000',
+    entry: '//localhost:8002',
     container: '#sub',
     activeRule: '/app1',
   },
