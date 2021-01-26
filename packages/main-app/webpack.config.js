@@ -81,7 +81,12 @@ const webpackConfig = {
         pathRewrite: { // 改变路径重定向
           '^/v2': '/'
         }
-      }
+      },
+      '/api/': {
+        target: 'https://preview.pro.ant.design',
+        changeOrigin: true,
+        pathRewrite: { '^': '' },
+      },
 
     },
     port: 8787

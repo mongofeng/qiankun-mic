@@ -13,6 +13,12 @@ registerMicroApps([
     container: '#sub',
     activeRule: '/ng-app',
   },
+  {
+    name: 'react 16',
+    entry: '//localhost:3000',
+    container: '#sub',
+    activeRule: '/#/auth',
+  }
 ]);
 start()
 
