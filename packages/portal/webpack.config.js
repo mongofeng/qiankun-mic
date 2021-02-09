@@ -83,11 +83,11 @@ const webpackConfig = {
         }
       },
       '/v2': {
-        target: process.env.API,
+        target: 'http://yangjin-art.top',
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向
-          '^/v2': '/'
+          '^': ''
         }
       },
       '/api/': {
