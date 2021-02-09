@@ -1,4 +1,5 @@
-﻿export default [
+﻿
+export default [
   {
     path: '/user',
     layout: false,
@@ -45,6 +46,12 @@
   {
     path: '/',
     redirect: '/welcome',
+  },
+  {
+    path: `http://localhost:8787/#/yangjin-min/base`,
+    isUrl: true,
+    name: '欢迎', // 兼容此写法
+    target: '_blank', // 点击新窗口打开
   },
   {
     component: './404',

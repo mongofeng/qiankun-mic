@@ -11,7 +11,7 @@ export default defineConfig({
   hash: true, // 配置是否让生成的文件包含 hash 后缀，通常用于增量发布和避免浏览器加载缓存。
   history: { type: 'hash' }, // 路由模式
   base: '/yangjin-pro/', // 路由的的目录
-  publicPath: process.env.NODE_ENV === 'production' ? '/app2/' : `//localhost:${PORT}/`, // 打包目录
+  publicPath: process.env.NODE_ENV === 'production' ? '/yangjin-pro/' : `//localhost:${PORT}/`, // 打包目录
   antd: {},
 
   qiankun: {
@@ -21,7 +21,7 @@ export default defineConfig({
     hmr: true,
   },
   layout: {
-    name: 'Ant Design Pro',
+    name: 'yangjinart',
     locale: true,
     siderWidth: 208,
     ...defaultSettings,
