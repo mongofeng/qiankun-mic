@@ -2,6 +2,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 // 分析包内容
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -17,6 +18,11 @@ const config = {
   VUE_APP_API_SERVER: '/v2/'
 }
 
+const externals = {
+  // 包名： 全局变量
+  qiankunApp: 'qiankunApp'
+}
+
 const cdn = {
   // js: ['https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js']
 }
@@ -26,10 +32,13 @@ const webpackConfig = {
   // 这就是我们项目编译的入口文件
   entry: path.resolve(__dirname, './src/main.ts'),
   output: {
-    publicPath:"/",
+    publicPath: isProd ? "/qiankun-mic/" : '/',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name][hash].js'
   },
+
+  externals,
+
   resolve: {
     extensions: ['.ts', 'tsx', '.js'],
     alias: {
@@ -92,7 +101,7 @@ const webpackConfig = {
   },
   // 这里就是一些插件
   plugins: [
-
+    
     new webpack.DefinePlugin({ 'process.env': JSON.stringify(config) }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -102,6 +111,11 @@ const webpackConfig = {
     }),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [path.resolve(__dirname, './dist')]
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, './public') },
+      ],
     }),
     new CompressionPlugin({
       test: new RegExp('\\.(' + ['js', 'css'].join('|') + ')$'),
