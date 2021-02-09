@@ -18,6 +18,12 @@ registerMicroApps([
     entry: '//localhost:3000',
     container: '#sub',
     activeRule: '/#/auth',
+  },
+  {
+    name: 'teaching-ss',
+    entry: '//localhost:4200',
+    container: '#sub',
+    activeRule: '/teaching-ss',
   }
 ]);
 start()

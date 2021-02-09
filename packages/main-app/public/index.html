@@ -12,11 +12,16 @@
     <li onclick="push('/ng-app')">ng-app</li>
     <li onclick="push('/app1/user/login')">React15</li>
     <li onclick="push('/#/auth/login')">React16</li>
+    <li onclick="push('/teaching-ss')">/teaching-ss</li>
+  </ul>
 
     <div id="sub"></div>
 </body>
 <script>
   function push(subapp) { history.pushState(null, subapp, subapp) }
+  window.addEventListener('popstate', function (e) {
+    console.log(e)
+  }, false)
 </script>
 
 </html>
