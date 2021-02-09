@@ -10,8 +10,7 @@ const path = require('path')
 
 const isProd = process.env.NODE_ENV === 'production'
 const isAnaly = process.env.analy === 'true'
-console.log(isAnaly)
-console.log(process.env.NODE_ENV, isProd)
+
 
 const config = {
   NODE_ENV: process.env.NODE_ENV,
@@ -19,7 +18,7 @@ const config = {
 }
 
 const cdn = {
-  js: ['https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js']
+  // js: ['https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js']
 }
 
 // 使用node的模块
@@ -64,7 +63,7 @@ const webpackConfig = {
     // 不启动压缩
     compress: false,
     host: 'localhost',
-    historyApiFallback:true,
+    // historyApiFallback:true,
     proxy: {
       '/wechatV2': {
         target: process.env.API,
@@ -83,7 +82,7 @@ const webpackConfig = {
         }
       },
       '/api/': {
-        target: 'https://preview.pro.ant.design',
+        target: 'http://localhost:8002',
         changeOrigin: true,
         pathRewrite: { '^': '' },
       },

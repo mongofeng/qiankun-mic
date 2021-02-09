@@ -1,33 +1,30 @@
-import 'zone.js'; // for angular subapp
-import { registerMicroApps, runAfterFirstMounted, start } from 'qiankun';
+// import 'zone.js'; // for angular subapp
+import { addGlobalUncaughtErrorHandler, registerMicroApps, runAfterFirstMounted, setDefaultMountApp, start } from 'qiankun';
 registerMicroApps([
   {
-    name: 'react app', // app name registered
-    entry: '//localhost:8002',
-    container: '#sub',
-    activeRule: '/app1',
-  },
-  {
-    name: 'ng app',
-    entry: '//localhost:4203',
-    container: '#sub',
-    activeRule: '/ng-app',
-  },
-  {
-    name: 'react 16',
+    name: 'yangjin-app',
     entry: '//localhost:3000',
     container: '#sub',
-    activeRule: '/#/auth',
+    activeRule: location => location.hash.startsWith('#/yangjin-min') // 资源激活的,
   },
   {
-    name: 'teaching-ss',
-    entry: '//localhost:4200',
+    name: 'yangjin-pro',
+    entry: '//localhost:8002',
     container: '#sub',
-    activeRule: '/teaching-ss',
+    activeRule: location => location.hash.startsWith('#/yangjin-pro') // 资源激活的,
   }
 ]);
 start()
 
+setDefaultMountApp('/#/yangjin-pro');
+
+// 第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。
 runAfterFirstMounted(() => {
-  console.log('[MainApp] first app mounted');
+  console.log('第一个微应用  mounted');
+});
+
+
+// 添加全局的未捕获异常处理器。
+addGlobalUncaughtErrorHandler(event => {
+  console.log(event)
 });
