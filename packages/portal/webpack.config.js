@@ -74,12 +74,12 @@ const webpackConfig = {
     host: 'localhost',
     // historyApiFallback:true,
     proxy: {
-      '/wechatV2': {
-        target: process.env.API,
+      '/platform/': {
+        target: 'http://yangjin-art.top',
         ws: true,
         changeOrigin: true,
         pathRewrite: { // 改变路径重定向
-          '^/wechatV2': '/wechat'
+          '^': ''
         }
       },
       '/v2': {
