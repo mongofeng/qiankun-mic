@@ -1,11 +1,15 @@
 declare namespace API {
+
+  export interface User {
+    account: string 
+    name: string 
+    mobile: string 
+    userId: string  
+    avatar: string  
+  }
+
   export type CurrentUser = {
-    data: { 
-      account: string 
-      name: string 
-      mobile: string 
-      userId: string  
-    }
+    data: User
   };
 
   export type LoginStateType = {
