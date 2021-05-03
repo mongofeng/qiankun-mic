@@ -12,6 +12,13 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/v2': {
+      // target: 'http://localhost:8110/',
+      target: 'http://yangjin-art.top',
+      // pathRewrite: {
+      //     "^/v2": "/"
+      // }
+    }
   },
   test: {
     '/api/': {

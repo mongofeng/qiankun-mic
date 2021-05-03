@@ -1,6 +1,11 @@
 ﻿
 export default [
   {
+    path: 'https://pro.ant.design/docs/getting-started-cn',
+    target: '_blank', // 点击新窗口打开
+    name: "文档",
+  },
+  {
     path: '/user',
     layout: false,
     routes: [
