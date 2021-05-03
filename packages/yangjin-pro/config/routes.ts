@@ -2,8 +2,18 @@
 export default [
   {
     path: 'https://pro.ant.design/docs/getting-started-cn',
-    target: '_blank', // 点击新窗口打开
+    
+
+    icon: 'smile',
     name: "文档",
+    routes: [
+      {
+        path: 'https://pro.ant.design/docs/getting-started-cn',
+        name: '文档一',
+        icon: 'smile',
+        target: '_blank', // 点击新窗口打开
+      },
+    ],
   },
   {
     path: '/user',
@@ -52,12 +62,7 @@ export default [
     path: '/',
     redirect: '/welcome',
   },
-  {
-    path: `http://localhost:8787/#/yangjin-min/base`,
-    isUrl: true,
-    name: '欢迎', // 兼容此写法
-    target: '_blank', // 点击新窗口打开
-  },
+
   {
     component: './404',
   },
