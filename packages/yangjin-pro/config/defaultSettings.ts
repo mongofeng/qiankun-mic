@@ -15,7 +15,7 @@ const Settings: LayoutSettings & {
   colorWeak: false,
   title: '杨瑾美术',
   pwa: false,
-  logo: 'http://yangjin-art.top/yangjin-pro/logo.jpg',
+  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
   "menu": {
     "locale": false

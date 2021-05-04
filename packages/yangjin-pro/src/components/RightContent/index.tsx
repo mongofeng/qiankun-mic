@@ -20,7 +20,7 @@ const GlobalHeaderRight: React.FC = () => {
     const src = pathname.replace(/^(?!\/)|(\/{2,})/g, '/');
     console.log(src)
     setPrefix(origin + src)
-    const key = hash.indexOf('app-common') ? 'app-common' : 'app-pro'
+    const key = hash.includes('app-common') ? 'app-common' : 'app-pro'
     setCurrent(key)
   }, [])
 
@@ -48,7 +48,7 @@ const GlobalHeaderRight: React.FC = () => {
       
       <Menu  mode="horizontal" onClick={handleClick} selectedKeys={[current]}>
         <Menu.Item key="app-common" >
-          <a href={prefix + '#/app-common'} >
+          <a href={prefix + '#/app-common/base'} >
           课程中心
           </a>
         </Menu.Item>
