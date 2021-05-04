@@ -1,15 +1,15 @@
 var qiankunApp = [
   {
-    name: 'yangjin-pro',
+    name: 'app-pro',
     entry: '/yangjin-pro/',
     container: '#sub',
-    url: '#/yangjin-pro',
+    url: '/app-pro',
   },
   {
-    name: 'yangjin-app',
+    name: 'app-common',
     entry: '/platform/',
     container: '#sub',
-    url: '#/yangjin-min',
+    url: '/app-common',
   }
 ]
 
