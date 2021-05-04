@@ -11,8 +11,15 @@ export default [
         path: 'https://pro.ant.design/docs/getting-started-cn',
         name: '文档一',
         icon: 'smile',
-        target: '_blank', // 点击新窗口打开
+        // target: '_blank', // 点击新窗口打开
       },
+      {
+        path: 'http://yangjin-art.top/platform/#/yangjin-min/auth/login',
+        name: '文档一',
+        icon: 'smile',
+        // target: '_blank', // 点击新窗口打开
+      },
+      
     ],
   },
   {

@@ -71,6 +71,7 @@ const webpackConfig = {
     stats: 'errors-only',
     // 不启动压缩
     compress: false,
+    historyApiFallback: true, // history 模式
     host: 'localhost',
     // historyApiFallback:true,
     proxy: {

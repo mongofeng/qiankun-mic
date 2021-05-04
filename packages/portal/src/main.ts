@@ -7,8 +7,8 @@ const apps = qiankunApp.map(i => {
     name: i.name,
     entry: i.entry,
     container: i.container,
-    // activeRule: (location: Location) => location.hash.startsWith(i.url) // 资源激活的,
-    activeRule: i.url // 资源激活的,
+    activeRule: (location: Location) => location.hash.startsWith(i.url) // 资源激活的,
+    // activeRule: i.url // 资源激活的,
   }
 })
 registerMicroApps(apps);
