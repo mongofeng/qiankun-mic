@@ -1,10 +1,7 @@
-import { Tag, Space, Menu } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Space, Menu } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useModel, SelectLang } from 'umi';
+import { useModel } from 'umi';
 import Avatar from './AvatarDropdown';
-import HeaderDropdown from '../HeaderDropdown';
-import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
@@ -17,7 +14,10 @@ const GlobalHeaderRight: React.FC = () => {
 
   useEffect(() => {
     const {origin , pathname, hash} = location
-    const src = pathname.replace(/^(?!\/)|(\/{2,})/g, '/');
+    let src = pathname.replace(/^(?!\/)|(\/{2,})/g, '/');
+    if (!(window as any).__POWERED_BY_QIANKUN__) {
+      src = '/platform/'
+    }
     console.log(src)
     setPrefix(origin + src)
     const key = hash.includes('app-common') ? 'app-common' : 'app-pro'
@@ -55,9 +55,7 @@ const GlobalHeaderRight: React.FC = () => {
   
     
         <Menu.Item key="app-pro">
-          <a href={prefix + '#/app-pro'} >
             资料中心
-          </a>
         </Menu.Item>
       </Menu>
 
