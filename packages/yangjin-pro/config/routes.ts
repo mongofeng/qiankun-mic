@@ -2,8 +2,6 @@
 export default [
   {
     path: 'https://pro.ant.design/docs/getting-started-cn',
-    
-
     icon: 'smile',
     name: "文档",
     routes: [

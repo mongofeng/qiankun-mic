@@ -14,9 +14,7 @@ import { useIntl, Link, history, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import type { LoginParamsType } from '@/services/login';
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
-import styles from './index.less';
-
-// const LoginMessage: React.FC<{
+import styles from './index.less'; // const LoginMessage: React.FC<{
 //   content: string;
 // }> = ({ content }) => (
 //   <Alert
@@ -28,6 +26,7 @@ import styles from './index.less';
 //     showIcon
 //   />
 // );
+
 /**
  * 此方法会跳转到 redirect 参数所在的位置
  */
@@ -42,47 +41,44 @@ const goto = () => {
     history.push(redirect || '/');
   }, 10);
 };
+
 const Login: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
-
   const [type, setType] = useState<string>('account');
-
   const { initialState, setInitialState } = useModel('@@initialState');
-
   const intl = useIntl();
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
-    console.log(userInfo)
+    console.log(userInfo);
 
     if (userInfo) {
       setInitialState({ ...initialState, currentUser: userInfo });
     }
-  };
+  }; // 登录
 
-  // 登录
   const handleSubmit = async (values: LoginParamsType) => {
     setSubmitting(true);
 
     try {
       // 登录
       const msg = await fakeAccountLogin({ ...values, type });
+
       if (msg.code === 0) {
         message.success('登录成功！');
-        window.localStorage.setItem('Authorization', msg.data.token)
+        window.localStorage.setItem('Authorization', msg.data.token);
         await fetchUserInfo();
         goto();
         return;
       } // 如果失败去设置用户错误信息
-
     } catch (error) {
       if (error.response.status === 401) {
         message.error('用户名密码错误');
       } else {
         message.error('登录失败，请重试！');
       }
-      console.log(error.response.status)
-      
+
+      console.log(error.response.status);
     }
 
     setSubmitting(false);
@@ -143,10 +139,6 @@ const Login: React.FC = () => {
                 })}
               />
             </Tabs>
-
-
-
-
 
             {type === 'account' && (
               <>
