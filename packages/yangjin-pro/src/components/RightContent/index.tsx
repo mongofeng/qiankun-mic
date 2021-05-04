@@ -1,6 +1,6 @@
 import { Tag, Space, Menu } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useModel, SelectLang } from 'umi';
 import Avatar from './AvatarDropdown';
 import HeaderDropdown from '../HeaderDropdown';
@@ -9,14 +9,29 @@ import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
 
-const ENVTagColor = {
-  dev: 'orange',
-  test: 'green',
-  pre: '#87d068',
-};
 
 const GlobalHeaderRight: React.FC = () => {
   const { initialState } = useModel('@@initialState');
+  const [prefix, setPrefix] = useState('')
+  const [current, setCurrent] = useState('')
+
+  useEffect(() => {
+    const {origin , pathname, hash} = location
+    const src = pathname.replace(/^(?!\/)|(\/{2,})/g, '/');
+    console.log(src)
+    setPrefix(origin + src)
+    const key = hash.indexOf('app-common') ? 'app-common' : 'app-pro'
+    setCurrent(key)
+  }, [])
+
+
+  const handleClick = useCallback(
+    e => {
+      console.log('click ', e);
+      setCurrent(e.key)
+    },
+    []
+  );
 
   if (!initialState || !initialState.settings) {
     return null;
@@ -30,60 +45,27 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="umi ui"
-        options={[
-          { label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>, value: 'umi ui' },
-          {
-            label: <a href="next.ant.design">Ant Design</a>,
-            value: 'Ant Design',
-          },
-          {
-            label: <a href="https://protable.ant.design/">Pro Table</a>,
-            value: 'Pro Table',
-          },
-          {
-            label: <a href="https://prolayout.ant.design/">Pro Layout</a>,
-            value: 'Pro Layout',
-          },
-        ]}
-        // onSearch={value => {
-        //   console.log('input', value);
-        // }}
-      />
-      <HeaderDropdown
-        overlay={
-          <Menu>
-            <Menu.Item
-              onClick={() => {
-                window.open('/~docs');
-              }}
-            >
-              组件文档
-            </Menu.Item>
-            <Menu.Item
-              onClick={() => {
-                window.open('https://pro.ant.design/docs/getting-started');
-              }}
-            >
-              Ant Design Pro 文档
-            </Menu.Item>
-          </Menu>
-        }
-      >
-        <span className={styles.action}>
-          <QuestionCircleOutlined />
-        </span>
-      </HeaderDropdown>
+      
+      <Menu  mode="horizontal" onClick={handleClick} selectedKeys={[current]}>
+        <Menu.Item key="app-common" >
+          <a href={prefix + '#/app-common'} >
+          课程中心
+          </a>
+        </Menu.Item>
+  
+    
+        <Menu.Item key="app-pro">
+          <a href={prefix + '#/app-pro'} >
+            资料中心
+          </a>
+        </Menu.Item>
+      </Menu>
+
+   
+      
+     
       <Avatar />
-      {REACT_APP_ENV && (
-        <span>
-          <Tag color={ENVTagColor[REACT_APP_ENV]}>{REACT_APP_ENV}</Tag>
-        </span>
-      )}
-      <SelectLang className={styles.action} />
+    
     </Space>
   );
 };

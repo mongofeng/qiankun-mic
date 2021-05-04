@@ -22,7 +22,7 @@ export default defineConfig({
   },
   layout: {
     name: '杨瑾美术',
-    locale: true,
+    locale: false,
     siderWidth: 208,
     ...defaultSettings,
   },

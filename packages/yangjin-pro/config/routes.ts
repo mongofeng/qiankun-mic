@@ -1,25 +1,6 @@
 ﻿
 export default [
-  {
-    path: 'https://pro.ant.design/docs/getting-started-cn',
-    icon: 'smile',
-    name: "文档",
-    routes: [
-      {
-        path: 'https://pro.ant.design/docs/getting-started-cn',
-        name: '文档一',
-        icon: 'smile',
-        // target: '_blank', // 点击新窗口打开
-      },
-      {
-        path: 'http://yangjin-art.top/platform/#/yangjin-min/auth/login',
-        name: '文档一',
-        icon: 'smile',
-        // target: '_blank', // 点击新窗口打开
-      },
-      
-    ],
-  },
+ 
   {
     path: '/user',
     layout: false,
@@ -38,7 +19,7 @@ export default [
   },
   {
     path: '/welcome',
-    name: 'welcome',
+    name: '欢迎',
     icon: 'smile',
     component: './Welcome',
   },
@@ -58,7 +39,7 @@ export default [
     ],
   },
   {
-    name: 'list.table-list',
+    name: '表格',
     icon: 'table',
     path: '/list',
     component: './TableList',

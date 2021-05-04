@@ -17,8 +17,8 @@ console.log(apps)
 
 start()
 
-// const {pathname} = location
-// setDefaultMountApp(pathname + qiankunApp[0].url);
+const {pathname} = location
+setDefaultMountApp(pathname + qiankunApp[0].url);
 
 // 第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。
 runAfterFirstMounted(() => {
