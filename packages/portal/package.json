@@ -1,0 +1,35 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc --init",
+    "start": "cross-env API=http://127.0.0.1:8110 webpack serve --mode development --env development",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js",
+    "build-analy": "cross-env NODE_ENV=production analy=true webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^7.0.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.3.3",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.12",
+    "typescript": "^4.1.3",
+    "webpack": "^5.10.3",
+    "webpack-bundle-analyzer": "^4.3.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "qiankun": "^2.3.6",
+    "zone.js": "^0.11.3"
+  }
+}
