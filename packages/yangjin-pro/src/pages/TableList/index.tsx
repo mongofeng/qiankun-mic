@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Input, Drawer } from 'antd';
-import React, { useState, useRef } from 'react';
-import { useIntl, FormattedMessage } from 'umi';
+import React, { useState, useRef, useEffect } from 'react';
+import { useIntl } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -11,7 +11,8 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
 import type { TableListItem } from './data.d';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import { addLongSortUrl, delLongSortUrl, getLongSortUrlList, queryPageList, updateLongSortUrl } from './service';
+
 /**
  * 添加节点
  * @param fields
@@ -21,7 +22,7 @@ const handleAdd = async (fields: TableListItem) => {
   const hide = message.loading('正在添加');
 
   try {
-    await addRule({ ...fields });
+    await addLongSortUrl({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -40,11 +41,7 @@ const handleUpdate = async (fields: FormValueType) => {
   const hide = message.loading('正在配置');
 
   try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
-    });
+    await updateLongSortUrl(fields.id as number , fields);
     hide();
     message.success('配置成功');
     return true;
@@ -64,9 +61,9 @@ const handleRemove = async (selectedRows: TableListItem[]) => {
   if (!selectedRows) return true;
 
   try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
+    await Promise.all(
+      selectedRows.map((row) => delLongSortUrl(row.id))
+    );
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -98,108 +95,68 @@ const TableList: React.FC = () => {
   const intl = useIntl();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '规则名称',
+      title: '短链接名称',
       dataIndex: 'name',
-      tip: '规则名称是唯一的 key',
+    },
+    {
+      title: '短链接',
+      dataIndex: 'id',
       render: (dom, entity) => {
         return (
           <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
+            href={`http://yangjin-art.top/api-edu/edu/long-sort-url/redirect/${entity.id}`}
           >
-            {dom}
+            {`http://yangjin-art.top/api-edu/edu/long-sort-url/redirect/${entity.id}`}
           </a>
         );
       },
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
-      valueType: 'textarea',
+      title: '长链接',
+      dataIndex: 'longUrl',
     },
+
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
-      sorter: true,
-      hideInForm: true,
-      renderText: (val: string) =>
-        `${val}${intl.formatMessage({
-          id: 'pages.searchTable.tenThousand',
-          defaultMessage: ' 万 ',
-        })}`,
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Default',
-        },
-        1: {
-          text: '运行中',
-          status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
-          status: 'Error',
-        },
-      },
-    },
-    {
-      title: '上次调度时间',
-      sorter: true,
-      dataIndex: 'updatedAt',
+      title: '创建时间',
+      // sorter: true,
+      dataIndex: 'createTime',
       valueType: 'dateTime',
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-
-        if (`${status}` === '0') {
-          return false;
-        }
-
-        if (`${status}` === '3') {
-          return (
-            <Input
-              {...rest}
-              placeholder={intl.formatMessage({
-                id: 'pages.searchTable.exception',
-                defaultMessage: '请输入异常原因！',
-              })}
-            />
-          );
-        }
-
-        return defaultRender(item);
-      },
     },
+
     {
-      title: '操作',
-      dataIndex: 'option',
-      valueType: 'option',
-      render: (_, record) => [
-        <a
-          key="config"
-          onClick={() => {
-            handleUpdateModalVisible(true);
-            setCurrentRow(record);
-          }}
-        >
-          配置
-        </a>,
-        <a key="subscribeAlert" href="https://procomponents.ant.design/">
-          订阅警报
-        </a>,
-      ],
+      title: '更新时间',
+      // sorter: true,
+      dataIndex: 'updateTime',
+      valueType: 'dateTime',
     },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'option',
+    //   valueType: 'option',
+    //   render: (_, record) => [
+    //     <a
+    //       key="config"
+    //       onClick={() => {
+    //         handleUpdateModalVisible(true);
+    //         setCurrentRow(record);
+    //       }}
+    //     >
+    //       配置
+    //     </a>,
+    //     <a key="subscribeAlert" href="https://procomponents.ant.design/">
+    //       订阅警报
+    //     </a>,
+    //   ],
+    // },
   ];
+
+
+  useEffect(() => {
+    getLongSortUrlList().then(res => {
+      console.log(res)
+    })
+  }, [])
+
   return (
     <PageContainer>
       <ProTable<TableListItem>
@@ -223,7 +180,18 @@ const TableList: React.FC = () => {
             <PlusOutlined /> 新建
           </Button>,
         ]}
-        request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
+        request={(params, sorter, filter) => queryPageList({ 
+          page: params.current,
+          size: params.pageSize,
+          query: null
+         }).then(res => {
+           console.log(res);
+           return {
+            data: res.data.records,
+            success: !res.code,
+            total: res.data.total,
+           }
+         })}
         columns={columns}
         rowSelection={{
           onChange: (_, selectedRows) => {
@@ -245,7 +213,7 @@ const TableList: React.FC = () => {
               </a>{' '}
               项 &nbsp;&nbsp;
               <span>
-                服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
+                {/* 服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万 */}
               </span>
             </div>
           }
@@ -265,7 +233,7 @@ const TableList: React.FC = () => {
       <ModalForm
         title={intl.formatMessage({
           id: 'pages.searchTable.createForm.newRule',
-          defaultMessage: '新建规则',
+          defaultMessage: '新建短链接',
         })}
         width="400px"
         visible={createModalVisible}
@@ -286,13 +254,24 @@ const TableList: React.FC = () => {
           rules={[
             {
               required: true,
-              message: '规则名称为必填项',
+              message: '短链接名称为必填项',
             },
           ]}
           width="md"
+          placeholder="短链接名称"
           name="name"
         />
-        <ProFormTextArea width="md" name="desc" />
+        <ProFormText
+        placeholder="长链接"
+          rules={[
+            {
+              required: true,
+              message: '长链接为必填项',
+            },
+          ]}
+          width="md"
+          name="longUrl"
+        />
       </ModalForm>
       <UpdateForm
         onSubmit={async (value) => {
@@ -343,3 +322,5 @@ const TableList: React.FC = () => {
 };
 
 export default TableList;
+
+

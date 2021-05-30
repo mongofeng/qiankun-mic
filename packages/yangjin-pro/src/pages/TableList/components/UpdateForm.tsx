@@ -80,11 +80,11 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           ]}
         />
         <ProFormTextArea
-          name="desc"
+          name="longUrl"
           width="md"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descLabel',
-            defaultMessage: '规则描述',
+            defaultMessage: '链接',
           })}
           placeholder={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleDesc.descPlaceholder',
@@ -93,7 +93,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           rules={[
             {
               required: true,
-              message: '请输入至少五个字符的规则描述！',
+              message: '请输入至少五个字符的链接！',
               min: 5,
             },
           ]}

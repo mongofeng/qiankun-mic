@@ -18,6 +18,13 @@ export default {
       // pathRewrite: {
       //     "^/v2": "/"
       // }
+    },
+    '/api-edu': {
+      // target: 'http://localhost:8110/',
+      target: 'http://yangjin-art.top',
+      // pathRewrite: {
+      //     "^/v2": "/"
+      // }
     }
   },
   test: {
