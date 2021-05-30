@@ -104,9 +104,9 @@ const TableList: React.FC = () => {
       render: (dom, entity) => {
         return (
           <a
-            href={`http://yangjin-art.top/api-edu/edu/long-sort-url/redirect/${entity.id}`}
+            href={`http://yangjin-art.top/r/${entity.id}`}
           >
-            {`http://yangjin-art.top/api-edu/edu/long-sort-url/redirect/${entity.id}`}
+            {`http://yangjin-art.top/r/${entity.id}`}
           </a>
         );
       },
